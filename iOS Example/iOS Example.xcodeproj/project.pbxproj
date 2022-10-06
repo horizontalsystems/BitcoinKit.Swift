@@ -1,0 +1,443 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2FA5D47CFAEB8DB143F27645 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DACF4DE83AC5FE512D28 /* Extensions.swift */; };
+		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
+		6BC11A5628EEAF0D0001FDF1 /* BitcoinKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BC11A5528EEAF0D0001FDF1 /* BitcoinKit */; };
+		6BC11A5828EEB0DD0001FDF1 /* BitcoinAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC11A5728EEB0DD0001FDF1 /* BitcoinAdapter.swift */; };
+		D36AAA9823A2125E0065B32B /* BaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA7F23A2125D0065B32B /* BaseAdapter.swift */; };
+		D36AAA9923A2125E0065B32B /* SendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D36AAA8123A2125D0065B32B /* SendController.xib */; };
+		D36AAA9A23A2125E0065B32B /* BalanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA8223A2125D0065B32B /* BalanceController.swift */; };
+		D36AAA9B23A2125E0065B32B /* TransactionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D36AAA8423A2125D0065B32B /* TransactionCell.xib */; };
+		D36AAA9C23A2125E0065B32B /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA8523A2125D0065B32B /* TransactionCell.swift */; };
+		D36AAA9D23A2125E0065B32B /* BalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA8623A2125D0065B32B /* BalanceCell.swift */; };
+		D36AAA9E23A2125E0065B32B /* BalanceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D36AAA8723A2125D0065B32B /* BalanceCell.xib */; };
+		D36AAA9F23A2125E0065B32B /* ReceiveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA8823A2125D0065B32B /* ReceiveController.swift */; };
+		D36AAAA023A2125E0065B32B /* WordsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA8923A2125D0065B32B /* WordsController.swift */; };
+		D36AAAA123A2125E0065B32B /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA8A23A2125D0065B32B /* MainController.swift */; };
+		D36AAAA223A2125E0065B32B /* WordsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D36AAA8B23A2125D0065B32B /* WordsController.xib */; };
+		D36AAAA323A2125E0065B32B /* TransactionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA8C23A2125D0065B32B /* TransactionsController.swift */; };
+		D36AAAA423A2125E0065B32B /* SendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA8D23A2125D0065B32B /* SendController.swift */; };
+		D36AAAA523A2125E0065B32B /* ReceiveController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D36AAA8E23A2125D0065B32B /* ReceiveController.xib */; };
+		D36AAAA623A2125E0065B32B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D36AAA8F23A2125D0065B32B /* Assets.xcassets */; };
+		D36AAAA723A2125E0065B32B /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA9023A2125D0065B32B /* Configuration.swift */; };
+		D36AAAA823A2125E0065B32B /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA9223A2125D0065B32B /* Manager.swift */; };
+		D36AAAA923A2125E0065B32B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA9323A2125D0065B32B /* Signal.swift */; };
+		D36AAAAA23A2125E0065B32B /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA9423A2125D0065B32B /* TransactionRecord.swift */; };
+		D36AAAAC23A212E30065B32B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D36AAAAB23A212E30065B32B /* LaunchScreen.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2FA5DACF4DE83AC5FE512D28 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		607FACD01AFB9204008FA782 /* BitcoinKit Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "BitcoinKit Demo.app"; path = "/Users/ant013/Ios/ HS_PODS/BitcoinKit.Swift/iOS Example/build/Debug-iphoneos/BitcoinKit Demo.app"; sourceTree = "<absolute>"; };
+		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6BC11A5728EEB0DD0001FDF1 /* BitcoinAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinAdapter.swift; sourceTree = "<group>"; };
+		D36AAA7F23A2125D0065B32B /* BaseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAdapter.swift; sourceTree = "<group>"; };
+		D36AAA8123A2125D0065B32B /* SendController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendController.xib; sourceTree = "<group>"; };
+		D36AAA8223A2125D0065B32B /* BalanceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceController.swift; sourceTree = "<group>"; };
+		D36AAA8423A2125D0065B32B /* TransactionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionCell.xib; sourceTree = "<group>"; };
+		D36AAA8523A2125D0065B32B /* TransactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
+		D36AAA8623A2125D0065B32B /* BalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceCell.swift; sourceTree = "<group>"; };
+		D36AAA8723A2125D0065B32B /* BalanceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BalanceCell.xib; sourceTree = "<group>"; };
+		D36AAA8823A2125D0065B32B /* ReceiveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveController.swift; sourceTree = "<group>"; };
+		D36AAA8923A2125D0065B32B /* WordsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordsController.swift; sourceTree = "<group>"; };
+		D36AAA8A23A2125D0065B32B /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		D36AAA8B23A2125D0065B32B /* WordsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WordsController.xib; sourceTree = "<group>"; };
+		D36AAA8C23A2125D0065B32B /* TransactionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsController.swift; sourceTree = "<group>"; };
+		D36AAA8D23A2125D0065B32B /* SendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendController.swift; sourceTree = "<group>"; };
+		D36AAA8E23A2125D0065B32B /* ReceiveController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiveController.xib; sourceTree = "<group>"; };
+		D36AAA8F23A2125D0065B32B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D36AAA9023A2125D0065B32B /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		D36AAA9223A2125D0065B32B /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
+		D36AAA9323A2125D0065B32B /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
+		D36AAA9423A2125D0065B32B /* TransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecord.swift; sourceTree = "<group>"; };
+		D36AAAAB23A212E30065B32B /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		607FACCD1AFB9204008FA782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6BC11A5628EEAF0D0001FDF1 /* BitcoinKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		607FACC71AFB9204008FA782 = {
+			isa = PBXGroup;
+			children = (
+				607FACD21AFB9204008FA782 /* Sources */,
+			);
+			sourceTree = "<group>";
+		};
+		607FACD21AFB9204008FA782 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D36AAA9123A2125D0065B32B /* Core */,
+				D36AAA7B23A2125D0065B32B /* Adapters */,
+				D36AAA8023A2125D0065B32B /* Controllers */,
+				D36AAA8F23A2125D0065B32B /* Assets.xcassets */,
+				D36AAA9023A2125D0065B32B /* Configuration.swift */,
+				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				D36AAAAB23A212E30065B32B /* LaunchScreen.xib */,
+				607FACD31AFB9204008FA782 /* Supporting Files */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		607FACD31AFB9204008FA782 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD41AFB9204008FA782 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D36AAA7B23A2125D0065B32B /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				D36AAA7F23A2125D0065B32B /* BaseAdapter.swift */,
+				6BC11A5728EEB0DD0001FDF1 /* BitcoinAdapter.swift */,
+			);
+			path = Adapters;
+			sourceTree = "<group>";
+		};
+		D36AAA8023A2125D0065B32B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D36AAA8123A2125D0065B32B /* SendController.xib */,
+				D36AAA8223A2125D0065B32B /* BalanceController.swift */,
+				D36AAA8323A2125D0065B32B /* Cells */,
+				D36AAA8823A2125D0065B32B /* ReceiveController.swift */,
+				D36AAA8923A2125D0065B32B /* WordsController.swift */,
+				D36AAA8A23A2125D0065B32B /* MainController.swift */,
+				D36AAA8B23A2125D0065B32B /* WordsController.xib */,
+				D36AAA8C23A2125D0065B32B /* TransactionsController.swift */,
+				D36AAA8D23A2125D0065B32B /* SendController.swift */,
+				D36AAA8E23A2125D0065B32B /* ReceiveController.xib */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		D36AAA8323A2125D0065B32B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D36AAA8423A2125D0065B32B /* TransactionCell.xib */,
+				D36AAA8523A2125D0065B32B /* TransactionCell.swift */,
+				D36AAA8623A2125D0065B32B /* BalanceCell.swift */,
+				D36AAA8723A2125D0065B32B /* BalanceCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		D36AAA9123A2125D0065B32B /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				D36AAA9223A2125D0065B32B /* Manager.swift */,
+				D36AAA9323A2125D0065B32B /* Signal.swift */,
+				D36AAA9423A2125D0065B32B /* TransactionRecord.swift */,
+				2FA5DACF4DE83AC5FE512D28 /* Extensions.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		607FACCF1AFB9204008FA782 /* iOS Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOS Example" */;
+			buildPhases = (
+				607FACCC1AFB9204008FA782 /* Sources */,
+				607FACCD1AFB9204008FA782 /* Frameworks */,
+				607FACCE1AFB9204008FA782 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iOS Example";
+			packageProductDependencies = (
+				6BC11A5528EEAF0D0001FDF1 /* BitcoinKit */,
+			);
+			productName = BitcoinKit;
+			productReference = 607FACD01AFB9204008FA782 /* BitcoinKit Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		607FACC81AFB9204008FA782 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 1120;
+				ORGANIZATIONNAME = CocoaPods;
+				TargetAttributes = {
+					607FACCF1AFB9204008FA782 = {
+						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = HC4MCAXJ66;
+						LastSwiftMigration = 0900;
+					};
+				};
+			};
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "iOS Example" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 607FACC71AFB9204008FA782;
+			packageReferences = (
+				6B7C7E6228EC00770053F11A /* XCRemoteSwiftPackageReference "Cuckoo" */,
+			);
+			productRefGroup = 607FACC71AFB9204008FA782;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				607FACCF1AFB9204008FA782 /* iOS Example */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		607FACCE1AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D36AAA9923A2125E0065B32B /* SendController.xib in Resources */,
+				D36AAA9E23A2125E0065B32B /* BalanceCell.xib in Resources */,
+				D36AAAA223A2125E0065B32B /* WordsController.xib in Resources */,
+				D36AAAAC23A212E30065B32B /* LaunchScreen.xib in Resources */,
+				D36AAAA623A2125E0065B32B /* Assets.xcassets in Resources */,
+				D36AAA9B23A2125E0065B32B /* TransactionCell.xib in Resources */,
+				D36AAAA523A2125E0065B32B /* ReceiveController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		607FACCC1AFB9204008FA782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D36AAAA323A2125E0065B32B /* TransactionsController.swift in Sources */,
+				D36AAAAA23A2125E0065B32B /* TransactionRecord.swift in Sources */,
+				D36AAA9F23A2125E0065B32B /* ReceiveController.swift in Sources */,
+				D36AAAA723A2125E0065B32B /* Configuration.swift in Sources */,
+				D36AAAA023A2125E0065B32B /* WordsController.swift in Sources */,
+				D36AAAA823A2125E0065B32B /* Manager.swift in Sources */,
+				D36AAAA923A2125E0065B32B /* Signal.swift in Sources */,
+				D36AAA9C23A2125E0065B32B /* TransactionCell.swift in Sources */,
+				6BC11A5828EEB0DD0001FDF1 /* BitcoinAdapter.swift in Sources */,
+				D36AAAA423A2125E0065B32B /* SendController.swift in Sources */,
+				D36AAA9D23A2125E0065B32B /* BalanceCell.swift in Sources */,
+				D36AAA9823A2125E0065B32B /* BaseAdapter.swift in Sources */,
+				D36AAA9A23A2125E0065B32B /* BalanceController.swift in Sources */,
+				D36AAAA123A2125E0065B32B /* MainController.swift in Sources */,
+				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				2FA5D47CFAEB8DB143F27645 /* Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		607FACED1AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		607FACEE1AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		607FACF01AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Sources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.horizontalsystems.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "BitcoinKit Demo";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		607FACF11AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Sources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.horizontalsystems.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "BitcoinKit Demo";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "iOS Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACED1AFB9204008FA782 /* Debug */,
+				607FACEE1AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOS Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACF01AFB9204008FA782 /* Debug */,
+				607FACF11AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6B7C7E6228EC00770053F11A /* XCRemoteSwiftPackageReference "Cuckoo" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Brightify/Cuckoo";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6BC11A5528EEAF0D0001FDF1 /* BitcoinKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BitcoinKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 607FACC81AFB9204008FA782 /* Project object */;
+}

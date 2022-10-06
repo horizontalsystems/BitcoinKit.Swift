@@ -26,3 +26,9 @@ _Pods.xcodeproj
 Pods/
 .idea
 GeneratedMocks.swift
+
+# SPM
+
+Package.resolved
+.swiftpm
+.build/
