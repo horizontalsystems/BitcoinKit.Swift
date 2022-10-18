@@ -5,7 +5,7 @@ class BalanceController: UITableViewController {
     private let disposeBag = DisposeBag()
     private var adapterDisposeBag = DisposeBag()
 
-    private var adapters = [BaseAdapter]()
+    private var adapter: BaseAdapter?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,17 +31,17 @@ class BalanceController: UITableViewController {
     }
 
     private func updateAdapters() {
-        adapters = Manager.shared.adapters
+        adapter = Manager.shared.adapter
         tableView.reloadData()
 
         adapterDisposeBag = DisposeBag()
 
-        for (index, adapter) in adapters.enumerated() {
+        if let adapter = Manager.shared.adapter {
             Observable.merge([adapter.lastBlockObservable, adapter.syncStateObservable, adapter.balanceObservable])
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] in
-                        self?.update(index: index)
+                        self?.update()
                     })
                     .disposed(by: adapterDisposeBag)
         }
@@ -58,7 +58,7 @@ class BalanceController: UITableViewController {
     }
 
     @objc func start() {
-        Manager.shared.adapters.forEach { $0.start() }
+        Manager.shared.adapter?.start()
         if let button = navigationItem.rightBarButtonItem {
             button.title = "Refresh"
             button.action = #selector(refresh)
@@ -66,7 +66,7 @@ class BalanceController: UITableViewController {
     }
 
     @objc func refresh() {
-        Manager.shared.adapters.forEach { $0.refresh() }
+        Manager.shared.adapter?.refresh()
     }
 
     @IBAction func showDebugInfo() {
@@ -74,25 +74,25 @@ class BalanceController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return adapters.count
+        1
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 220
+        220
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self), for: indexPath)
+        tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self), for: indexPath)
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? BalanceCell {
-            cell.bind(adapter: adapters[indexPath.row])
+        if let cell = cell as? BalanceCell, let adapter = adapter {
+            cell.bind(adapter: adapter)
         }
     }
 
-    private func update(index: Int) {
-        tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+    private func update() {
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
     }
 
 }

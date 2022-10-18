@@ -35,10 +35,12 @@
 
 /* Begin PBXFileReference section */
 		2FA5DACF4DE83AC5FE512D28 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		607FACD01AFB9204008FA782 /* BitcoinKit Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "BitcoinKit Demo.app"; path = "/Users/ant013/Ios/ HS_PODS/BitcoinKit.Swift/iOS Example/build/Debug-iphoneos/BitcoinKit Demo.app"; sourceTree = "<absolute>"; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6B40739328F6B5D2003317FB /* HdWalletKit.Swift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = HdWalletKit.Swift; path = ../../HdWalletKit.Swift; sourceTree = "<group>"; };
 		6BC11A5728EEB0DD0001FDF1 /* BitcoinAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinAdapter.swift; sourceTree = "<group>"; };
+		6BE77D6F28F687F400BD03EF /* BitcoinKit Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BitcoinKit Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BE77D7028F6880600BD03EF /* BitcoinCore.Swift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BitcoinCore.Swift; path = ../../BitcoinCore.Swift; sourceTree = "<group>"; };
 		D36AAA7F23A2125D0065B32B /* BaseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAdapter.swift; sourceTree = "<group>"; };
 		D36AAA8123A2125D0065B32B /* SendController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendController.xib; sourceTree = "<group>"; };
 		D36AAA8223A2125D0065B32B /* BalanceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceController.swift; sourceTree = "<group>"; };
@@ -76,7 +78,10 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				6B40739328F6B5D2003317FB /* HdWalletKit.Swift */,
+				6BE77D7028F6880600BD03EF /* BitcoinCore.Swift */,
 				607FACD21AFB9204008FA782 /* Sources */,
+				6BE77D6F28F687F400BD03EF /* BitcoinKit Demo.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,7 +176,7 @@
 				6BC11A5528EEAF0D0001FDF1 /* BitcoinKit */,
 			);
 			productName = BitcoinKit;
-			productReference = 607FACD01AFB9204008FA782 /* BitcoinKit Demo.app */;
+			productReference = 6BE77D6F28F687F400BD03EF /* BitcoinKit Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

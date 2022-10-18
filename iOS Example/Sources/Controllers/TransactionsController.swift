@@ -5,7 +5,7 @@ class TransactionsController: UITableViewController {
     private let disposeBag = DisposeBag()
     private var adapterDisposeBag = DisposeBag()
 
-    private var adapters = [BaseAdapter]()
+    private var adapter: BaseAdapter?
     private var transactions = [TransactionRecord]()
 
     private let segmentedControl = UISegmentedControl()
@@ -38,18 +38,18 @@ class TransactionsController: UITableViewController {
     private func updateAdapters() {
         segmentedControl.removeAllSegments()
 
-        adapters = Manager.shared.adapters
+        adapter = Manager.shared.adapter
 
         adapterDisposeBag = DisposeBag()
 
-        for (index, adapter) in adapters.enumerated() {
-            segmentedControl.insertSegment(withTitle: adapter.coinCode, at: index, animated: false)
+        if let adapter = adapter {
+            segmentedControl.insertSegment(withTitle: adapter.coinCode, at: 0, animated: false)
 
             adapter.lastBlockObservable
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] in
-                        self?.onLastBlockHeightUpdated(index: index)
+                        self?.onLastBlockHeightUpdated()
                     })
                     .disposed(by: adapterDisposeBag)
 
@@ -57,7 +57,7 @@ class TransactionsController: UITableViewController {
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] in
-                        self?.onTransactionsUpdated(index: index)
+                        self?.onTransactionsUpdated()
                     })
                     .disposed(by: adapterDisposeBag)
         }
@@ -76,7 +76,8 @@ class TransactionsController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        transactions.count
+        print(transactions.count)
+        return transactions.count
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -117,11 +118,11 @@ class TransactionsController: UITableViewController {
     }
 
     private var currentAdapter: BaseAdapter? {
-        guard segmentedControl.selectedSegmentIndex != -1, adapters.count > segmentedControl.selectedSegmentIndex else {
+        guard segmentedControl.selectedSegmentIndex != -1, 1 > segmentedControl.selectedSegmentIndex else {
             return nil
         }
 
-        return adapters[segmentedControl.selectedSegmentIndex]
+        return adapter
     }
 
     private func loadNext() {
@@ -152,16 +153,12 @@ class TransactionsController: UITableViewController {
         }
     }
 
-    private func onLastBlockHeightUpdated(index: Int) {
-        if index == segmentedControl.selectedSegmentIndex {
-            tableView.reloadData()
-        }
+    private func onLastBlockHeightUpdated() {
+        tableView.reloadData()
     }
 
-    private func onTransactionsUpdated(index: Int) {
-        if index == segmentedControl.selectedSegmentIndex {
-            onSegmentChanged()
-        }
+    private func onTransactionsUpdated() {
+//        onSegmentChanged()
     }
 
 }

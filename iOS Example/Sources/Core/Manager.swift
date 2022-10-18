@@ -2,56 +2,62 @@ import Foundation
 import RxSwift
 import BitcoinCore
 import HsToolKit
+import HdWalletKit
 
 class Manager {
     static let shared = Manager()
     private static let syncModes: [BitcoinCore.SyncMode] = [.full, .api, .newWallet]
 
-    private let keyWords = "mnemonic_words"
+    private let restoreDataKey = "restore_data"
     private let syncModeKey = "syncMode"
 
     let adapterSignal = Signal()
-    var adapters = [BaseAdapter]()
+    var adapter: BitcoinAdapter?
 
     init() {
-        if let words = savedWords, let syncModeIndex = savedSyncModeIndex {
+        if let restoreData = savedRestoreData, let syncModeIndex = savedSyncModeIndex {
             DispatchQueue.global(qos: .userInitiated).async {
-                self.initAdapters(words: words, syncMode: Manager.syncModes[syncModeIndex])
+                self.initAdapter(restoreData: restoreData, syncMode: Manager.syncModes[syncModeIndex])
             }
         }
     }
 
-    func login(words: [String], syncModeIndex: Int) {
-        save(words: words)
+    func login(restoreData: String, syncModeIndex: Int) {
+        save(restoreData: restoreData)
         save(syncModeIndex: syncModeIndex)
         clearKits()
 
         DispatchQueue.global(qos: .userInitiated).async {
-            self.initAdapters(words: words, syncMode: Manager.syncModes[syncModeIndex])
+            self.initAdapter(restoreData: restoreData, syncMode: Manager.syncModes[syncModeIndex])
         }
     }
 
     func logout() {
         clearUserDefaults()
-        adapters = []
+        adapter = nil
     }
 
-    private func initAdapters(words: [String], syncMode: BitcoinCore.SyncMode) {
+    private func initAdapter(restoreData: String, syncMode: BitcoinCore.SyncMode) {
         let configuration = Configuration.shared
         let logger = Logger(minLogLevel: Configuration.shared.minLogLevel)
 
-        adapters = [
-            BitcoinAdapter(words: words, bip: .bip44, testMode: configuration.testNet, syncMode: syncMode, logger: logger),
-        ]
+        let words = restoreData.components(separatedBy: .whitespacesAndNewlines)
+        if words.count > 1 {
+            adapter = BitcoinAdapter(words: words, bip: .bip44, testMode: configuration.testNet, syncMode: syncMode, logger: logger)
+        } else {
+            do {
+                _ = try HDExtendedKey(extendedKey: restoreData)
+                adapter = BitcoinAdapter(extendedKey: restoreData, bip: .bip44, testMode: configuration.testNet, syncMode: syncMode, logger: logger)
+            } catch {
+                adapter = nil
+            }
+        }
 
         adapterSignal.notify()
     }
 
-    var savedWords: [String]? {
-        if let wordsString = UserDefaults.standard.value(forKey: keyWords) as? String {
-            return wordsString.split(separator: " ").map(String.init)
-        }
-        return nil
+    var savedRestoreData: String? {
+        UserDefaults.standard.value(forKey: restoreDataKey) as? String
     }
 
     var savedSyncModeIndex: Int? {
@@ -61,8 +67,8 @@ class Manager {
         return nil
     }
 
-    private func save(words: [String]) {
-        UserDefaults.standard.set(words.joined(separator: " "), forKey: keyWords)
+    private func save(restoreData: String) {
+        UserDefaults.standard.set(restoreData, forKey: restoreDataKey)
         UserDefaults.standard.synchronize()
     }
 
@@ -72,7 +78,7 @@ class Manager {
     }
 
     private func clearUserDefaults() {
-        UserDefaults.standard.removeObject(forKey: keyWords)
+        UserDefaults.standard.removeObject(forKey: restoreDataKey)
         UserDefaults.standard.removeObject(forKey: syncModeKey)
         UserDefaults.standard.synchronize()
     }

@@ -163,8 +163,8 @@ extension BaseAdapter {
         }
     }
 
-    func minSpendableAmount(for address: String?) -> Decimal {
-        Decimal(abstractKit.minSpendableValue(toAddress: address)) / coinRate
+    func minSpendableAmount(for address: String?) throws -> Decimal {
+        Decimal(try abstractKit.minSpendableValue(toAddress: address)) / coinRate
     }
 
     func fee(for value: Decimal, address: String?, pluginData: [UInt8: IPluginData] = [:]) -> Decimal {

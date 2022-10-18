@@ -8,7 +8,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let controller = Manager.shared.savedWords == nil ? UINavigationController(rootViewController: WordsController()) : MainController()
+        let controller = Manager.shared.savedRestoreData == nil ? UINavigationController(rootViewController: WordsController()) : MainController()
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()

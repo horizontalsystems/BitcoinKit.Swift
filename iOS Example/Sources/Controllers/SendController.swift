@@ -17,7 +17,7 @@ class SendController: UIViewController {
     private var timeIntervals: [HodlerPlugin.LockTimeInterval] = [.hour, .month, .halfYear, .year]
     private var selectedTimeInterval: HodlerPlugin.LockTimeInterval = .hour
 
-    private var adapters = [BaseAdapter]()
+    private var adapter: BaseAdapter?
     private let segmentedControl = UISegmentedControl()
     private var timeLockEnabled = false
 
@@ -42,10 +42,10 @@ class SendController: UIViewController {
     private func updateAdapters() {
         segmentedControl.removeAllSegments()
 
-        adapters = Manager.shared.adapters
+        adapter = Manager.shared.adapter
 
-        for (index, adapter) in adapters.enumerated() {
-            segmentedControl.insertSegment(withTitle: adapter.coinCode, at: index, animated: false)
+        if let adapter = adapter {
+            segmentedControl.insertSegment(withTitle: adapter.coinCode, at: 0, animated: false)
         }
 
         navigationItem.titleView = segmentedControl
@@ -137,7 +137,7 @@ class SendController: UIViewController {
             }
         }
 
-        if let minAmount = currentAdapter?.minSpendableAmount(for: address) {
+        if let minAmount = try? currentAdapter?.minSpendableAmount(for: address) {
             amountTextField?.text = "\(minAmount)"
             onAmountEditEnded(0)
         }
@@ -192,11 +192,11 @@ class SendController: UIViewController {
     }
 
     private var currentAdapter: BaseAdapter? {
-        guard segmentedControl.selectedSegmentIndex != -1, adapters.count > segmentedControl.selectedSegmentIndex else {
+        guard segmentedControl.selectedSegmentIndex != -1, 1 > segmentedControl.selectedSegmentIndex else {
             return nil
         }
 
-        return adapters[segmentedControl.selectedSegmentIndex]
+        return adapter
     }
 
 }

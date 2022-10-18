@@ -49,22 +49,42 @@ class WordsController: UIViewController {
     }
 
     @IBAction func login() {
-        let words = textView?.text.components(separatedBy: .whitespacesAndNewlines).filter { !$0.isEmpty } ?? []
+        guard let text = textView?.text else {
+            return
+        }
+        let successBlock = { [weak self] in
+            Manager.shared.login(restoreData: text, syncModeIndex: self?.syncModeListControl.selectedSegmentIndex ?? 0)
 
-        do {
-            try Mnemonic.validate(words: words)
-
-            Manager.shared.login(words: words, syncModeIndex: syncModeListControl.selectedSegmentIndex)
-
-            if let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first {
+            if let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first {
+                let mainController = MainController()
+                mainController.watchAccount = Manager.shared.adapter?.watchAccount ?? false
                 UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
-                    window.rootViewController = MainController()
+                    window.rootViewController = mainController
                 })
             }
-        } catch {
+        }
+
+        let errorBlock: (Error) -> Void = { [weak self] error in
             let alert = UIAlertController(title: "Validation Error", message: "\(error)", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-            present(alert, animated: true)
+            self?.present(alert, animated: true)
+        }
+
+        let mnemonicWords = text.components(separatedBy: .whitespacesAndNewlines).filter { !$0.isEmpty }
+        if mnemonicWords.count > 1 {
+            do {
+                try Mnemonic.validate(words: mnemonicWords)
+                successBlock()
+            } catch {
+                errorBlock(error)
+            }
+        } else {
+            do {
+                _ = try HDExtendedKey(extendedKey: text)
+                successBlock()
+            } catch {
+                errorBlock(error)
+            }
         }
     }
 
