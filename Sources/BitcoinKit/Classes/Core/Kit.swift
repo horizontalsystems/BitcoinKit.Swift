@@ -20,7 +20,25 @@ public class Kit: AbstractKit {
         }
     }
 
-    public init(seed: Data? = nil, extendedKey: String? = nil, bip: Bip, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?) throws {
+    public convenience init(seed: Data, bip: Bip, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?) throws {
+        let version: HDExtendedKeyVersion
+        switch bip {
+        case .bip44: version = .xprv
+        case .bip49: version = .yprv
+        case .bip84: version = .zprv
+        }
+        let masterPrivateKey = HDPrivateKey(seed: seed, xPrivKey: version.rawValue)
+
+        try self.init(extendedKey: .private(key: masterPrivateKey),
+                bip: bip,
+                walletId: walletId,
+                syncMode: syncMode,
+                networkType: networkType,
+                confirmationsThreshold: confirmationsThreshold,
+                logger: logger)
+    }
+
+    public init(extendedKey: HDExtendedKey, bip: Bip, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?) throws {
         let network: INetwork
         let logger = logger ?? Logger(minLogLevel: .verbose)
 
@@ -68,7 +86,7 @@ public class Kit: AbstractKit {
 
         let hodler = HodlerPlugin(addressConverter: bitcoinCoreBuilder.addressConverter, blockMedianTimeHelper: BlockMedianTimeHelper(storage: storage), publicKeyStorage: storage)
 
-        _ = try bitcoinCoreBuilder
+        let bitcoinCore = try bitcoinCoreBuilder
                 .set(network: network)
                 .set(initialSyncApi: initialSyncApi)
                 .set(bip: bip)
@@ -80,13 +98,8 @@ public class Kit: AbstractKit {
                 .set(storage: storage)
                 .set(blockValidator: blockValidatorSet)
                 .add(plugin: hodler)
-        if let seed = seed {
-            _ = bitcoinCoreBuilder.set(seed: seed)
-        }
-        if let extendedKey = extendedKey {
-            _ = try bitcoinCoreBuilder.set(extendedKey: extendedKey)
-        }
-        let bitcoinCore = try bitcoinCoreBuilder.build()
+                .set(extendedKey: extendedKey)
+                .build()
 
         super.init(bitcoinCore: bitcoinCore, network: network)
 
