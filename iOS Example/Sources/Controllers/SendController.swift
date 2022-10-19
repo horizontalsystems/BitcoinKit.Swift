@@ -11,6 +11,7 @@ class SendController: UIViewController {
     @IBOutlet weak var coinLabel: UILabel?
     @IBOutlet weak var feeLabel: UILabel?
     @IBOutlet weak var timeLockSwitch: UISwitch?
+    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var picker: UIPickerView?
 
     private var timeIntervalStrings = ["Hour", "Month", "Half Year", "Year"]
@@ -48,10 +49,23 @@ class SendController: UIViewController {
             segmentedControl.insertSegment(withTitle: adapter.coinCode, at: 0, animated: false)
         }
 
+        if let adapter = adapter as? BitcoinAdapter {
+            update(watchAccount: adapter.watchAccount)
+        }
+
         navigationItem.titleView = segmentedControl
 
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.sendActions(for: .valueChanged)
+    }
+
+    private func update(watchAccount: Bool) {
+        addressTextField?.isEnabled = !watchAccount
+        amountTextField?.isEnabled = !watchAccount
+        feeLabel?.isEnabled = !watchAccount
+        timeLockSwitch?.isEnabled = !watchAccount
+        picker?.isHidden = watchAccount
+        sendButton.isEnabled = !watchAccount
     }
     
     private func updateFee() {

@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendController" customModule="Demo" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendController" customModule="BitcoinKit_Demo" customModuleProvider="target">
             <connections>
                 <outlet property="addressTextField" destination="eid-xi-6C6" id="FDB-s1-Rsb"/>
                 <outlet property="amountTextField" destination="0XQ-lU-qZQ" id="7BO-ra-IQ8"/>
                 <outlet property="coinLabel" destination="0l6-dd-V8i" id="XoD-9D-k31"/>
                 <outlet property="feeLabel" destination="Ibd-Fx-j90" id="0eT-qr-53a"/>
                 <outlet property="picker" destination="8Vw-s5-Fxq" id="YoZ-zM-2zw"/>
+                <outlet property="sendButton" destination="PLD-Gr-HJH" id="ZB5-NG-S4L"/>
                 <outlet property="timeLockSwitch" destination="iiV-cm-HoG" id="aIp-U7-Bhy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -64,7 +66,7 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PLD-Gr-HJH">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PLD-Gr-HJH">
                     <rect key="frame" x="168" y="502" width="39" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="QKD-8X-Psj"/>
@@ -100,7 +102,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="Goi-VK-2l7" firstAttribute="top" secondItem="yRm-9c-U7G" secondAttribute="top" constant="5" id="C8T-CS-z8o"/>
                         <constraint firstAttribute="trailing" secondItem="Goi-VK-2l7" secondAttribute="trailing" id="GLv-sM-CVG"/>
@@ -114,14 +116,14 @@
                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Vw-s5-Fxq">
                     <rect key="frame" x="27.5" y="231" width="320" height="216"/>
                 </pickerView>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ica-qS-bdK">
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ica-qS-bdK">
                     <rect key="frame" x="278" y="132" width="30" height="30"/>
                     <state key="normal" title="Min"/>
                     <connections>
                         <action selector="setMinAmount" destination="-1" eventType="touchUpInside" id="Tu7-3t-xVD"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pxe-EY-uf2">
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pxe-EY-uf2">
                     <rect key="frame" x="240" y="132" width="30" height="30"/>
                     <state key="normal" title="Max"/>
                     <connections>
@@ -129,6 +131,7 @@
                     </connections>
                 </button>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="yRm-9c-U7G" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="1Dq-fK-m7M"/>
@@ -161,8 +164,12 @@
                 <constraint firstItem="0l6-dd-V8i" firstAttribute="centerY" secondItem="0XQ-lU-qZQ" secondAttribute="centerY" id="w9e-48-GEH"/>
                 <constraint firstItem="0XQ-lU-qZQ" firstAttribute="top" secondItem="iZq-bw-BVE" secondAttribute="bottom" constant="10" id="zxL-s7-GWn"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="138.40000000000001" y="152.47376311844079"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

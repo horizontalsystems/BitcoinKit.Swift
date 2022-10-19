@@ -57,7 +57,6 @@ class WordsController: UIViewController {
 
             if let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first {
                 let mainController = MainController()
-                mainController.watchAccount = Manager.shared.adapter?.watchAccount ?? false
                 UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
                     window.rootViewController = mainController
                 })
