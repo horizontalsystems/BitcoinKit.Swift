@@ -8,23 +8,23 @@ import RxSwift
 class BitcoinAdapter: BaseAdapter {
     let bitcoinKit: Kit
 
-    init(words: [String], bip: Bip, testMode: Bool, syncMode: BitcoinCore.SyncMode, logger: Logger) {
+    init(words: [String], purpose: Purpose, testMode: Bool, syncMode: BitcoinCore.SyncMode, logger: Logger) {
         let networkType: Kit.NetworkType = testMode ? .testNet : .mainNet
         guard let seed = Mnemonic.seed(mnemonic: words) else {
             fatalError("Cant create BitcoinSeed")
         }
 
-        bitcoinKit = try! Kit(seed: seed, bip: bip, walletId: "walletId", syncMode: syncMode, networkType: networkType, confirmationsThreshold: 1, logger: logger.scoped(with: "BitcoinKit"))
+        bitcoinKit = try! Kit(seed: seed, purpose: purpose, walletId: "walletId", syncMode: syncMode, networkType: networkType, confirmationsThreshold: 1, logger: logger.scoped(with: "BitcoinKit"))
 
         super.init(name: "Bitcoin", coinCode: "BTC", abstractKit: bitcoinKit)
         bitcoinKit.delegate = self
     }
 
-    init(extendedKey: String, bip: Bip, testMode: Bool, syncMode: BitcoinCore.SyncMode, logger: Logger) {
+    init(extendedKey: String, testMode: Bool, syncMode: BitcoinCore.SyncMode, logger: Logger) {
         let networkType: Kit.NetworkType = testMode ? .testNet : .mainNet
 
         let extendedKey = try! HDExtendedKey(extendedKey: extendedKey)
-        bitcoinKit = try! Kit(extendedKey: extendedKey, bip: bip, walletId: "walletId", syncMode: syncMode, networkType: networkType, confirmationsThreshold: 1, logger: logger.scoped(with: "BitcoinKit"))
+        bitcoinKit = try! Kit(extendedKey: extendedKey, walletId: "walletId", syncMode: syncMode, networkType: networkType, confirmationsThreshold: 1, logger: logger.scoped(with: "BitcoinKit"))
 
         super.init(name: "Bitcoin", coinCode: "BTC", abstractKit: bitcoinKit)
         bitcoinKit.delegate = self
