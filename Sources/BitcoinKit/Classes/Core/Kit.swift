@@ -26,10 +26,12 @@ public class Kit: AbstractKit {
         case .bip44: version = .xprv
         case .bip49: version = .yprv
         case .bip84: version = .zprv
+        case .bip86: version = .xprv
         }
         let masterPrivateKey = HDPrivateKey(seed: seed, xPrivKey: version.rawValue)
 
         try self.init(extendedKey: .private(key: masterPrivateKey),
+                purpose: purpose,
                 walletId: walletId,
                 syncMode: syncMode,
                 networkType: networkType,
@@ -37,7 +39,7 @@ public class Kit: AbstractKit {
                 logger: logger)
     }
 
-    public init(extendedKey: HDExtendedKey, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?) throws {
+    public init(extendedKey: HDExtendedKey, purpose: Purpose, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?) throws {
         let network: INetwork
         let logger = logger ?? Logger(minLogLevel: .verbose)
 
@@ -54,7 +56,6 @@ public class Kit: AbstractKit {
                 initialSyncApi = nil
         }
 
-        let purpose = extendedKey.info.purpose
         let databaseFilePath = try DirectoryHelper.directoryURL(for: Kit.name).appendingPathComponent(Kit.databaseFileName(walletId: walletId, networkType: networkType, purpose: purpose, syncMode: syncMode)).path
         let storage = GrdbStorage(databaseFilePath: databaseFilePath)
 
@@ -97,6 +98,7 @@ public class Kit: AbstractKit {
                 .set(storage: storage)
                 .set(blockValidator: blockValidatorSet)
                 .add(plugin: hodler)
+                .set(purpose: purpose)
                 .set(extendedKey: extendedKey)
                 .build()
 
@@ -115,6 +117,8 @@ public class Kit: AbstractKit {
             bitcoinCore.add(restoreKeyConverter: Bip49RestoreKeyConverter(addressConverter: base58AddressConverter))
         case .bip84:
             bitcoinCore.add(restoreKeyConverter: Bip84RestoreKeyConverter(addressConverter: bech32AddressConverter))
+        case .bip86:
+            bitcoinCore.add(restoreKeyConverter: Bip86RestoreKeyConverter(addressConverter: bech32AddressConverter))
         }
     }
 
