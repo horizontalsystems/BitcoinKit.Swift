@@ -13,9 +13,9 @@ let package = Package(
             targets: ["BitcoinKit"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/horizontalsystems/BitcoinCore.Swift.git", .upToNextMajor(from: "1.1.0")),
+        .package(url: "https://github.com/horizontalsystems/BitcoinCore.Swift.git", .upToNextMajor(from: "1.1.3")),
         .package(url: "https://github.com/horizontalsystems/HdWalletKit.Swift.git", .upToNextMinor(from: "1.2.0")),
-        .package(url: "https://github.com/horizontalsystems/Hodler.Swift.git", .upToNextMajor(from: "1.0.2")),
+        .package(url: "https://github.com/horizontalsystems/Hodler.Swift.git", .upToNextMajor(from: "1.0.3")),
         .package(url: "https://github.com/horizontalsystems/HsToolKit.Swift.git", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/horizontalsystems/HsCryptoKit.Swift.git", .upToNextMinor(from: "1.2.1")),
         .package(url: "https://github.com/horizontalsystems/HsExtensions.Swift.git", .upToNextMajor(from: "1.0.0")),
