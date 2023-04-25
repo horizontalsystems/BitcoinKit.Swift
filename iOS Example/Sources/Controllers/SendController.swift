@@ -1,10 +1,10 @@
+import Combine
 import UIKit
-import RxSwift
 import Hodler
 import BitcoinCore
 
 class SendController: UIViewController {
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     @IBOutlet weak var addressTextField: UITextField?
     @IBOutlet weak var amountTextField: UITextField?
@@ -29,13 +29,12 @@ class SendController: UIViewController {
         picker?.dataSource = self
         picker?.delegate = self
 
-        Manager.shared.adapterSignal
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
+        Manager.shared.adapterSubject
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
                     self?.updateAdapters()
-                })
-                .disposed(by: disposeBag)
+                }
+                .store(in: &cancellables)
 
         updateAdapters()
     }
@@ -179,18 +178,16 @@ class SendController: UIViewController {
             pluginData[HodlerPlugin.id] = HodlerData(lockTimeInterval: self.selectedTimeInterval)
         }
 
-        currentAdapter?.sendSingle(to: address, amount: amount, sortType: .shuffle, pluginData: pluginData)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] _ in
-                    self?.addressTextField?.text = ""
-                    self?.amountTextField?.text = ""
+        do {
+            try currentAdapter?.send(to: address, amount: amount, sortType: .shuffle, pluginData: pluginData)
 
-                    self?.showSuccess(address: address, amount: amount)
-                }, onError: { [weak self] error in
-                    self?.show(error: "Send failed: \(error)")
-                })
-                .disposed(by: disposeBag)
+            addressTextField?.text = ""
+            amountTextField?.text = ""
+
+            showSuccess(address: address, amount: amount)
+        } catch {
+            show(error: "Send failed: \(error)")
+        }
     }
 
     private func show(error: String) {

@@ -3,7 +3,6 @@ import BitcoinKit
 import BitcoinCore
 import HdWalletKit
 import HsToolKit
-import RxSwift
 
 class BitcoinAdapter: BaseAdapter {
     let bitcoinKit: Kit
@@ -42,23 +41,23 @@ extension BitcoinAdapter: BitcoinCoreDelegate {
     }
 
     func transactionsUpdated(inserted: [TransactionInfo], updated: [TransactionInfo]) {
-        transactionsSignal.notify()
+        transactionsSubject.send()
     }
 
     func transactionsDeleted(hashes: [String]) {
-        transactionsSignal.notify()
+        transactionsSubject.send()
     }
 
     func balanceUpdated(balance: BalanceInfo) {
-        balanceSignal.notify()
+        balanceSubject.send()
     }
 
     func lastBlockInfoUpdated(lastBlockInfo: BlockInfo) {
-        lastBlockSignal.notify()
+        lastBlockSubject.send()
     }
 
     public func kitStateUpdated(state: BitcoinCore.KitState) {
-        syncStateSignal.notify()
+        syncStateSubject.send()
     }
 
 }

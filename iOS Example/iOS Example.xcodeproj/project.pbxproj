@@ -28,7 +28,6 @@
 		D36AAAA623A2125E0065B32B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D36AAA8F23A2125D0065B32B /* Assets.xcassets */; };
 		D36AAAA723A2125E0065B32B /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA9023A2125D0065B32B /* Configuration.swift */; };
 		D36AAAA823A2125E0065B32B /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA9223A2125D0065B32B /* Manager.swift */; };
-		D36AAAA923A2125E0065B32B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA9323A2125D0065B32B /* Signal.swift */; };
 		D36AAAAA23A2125E0065B32B /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36AAA9423A2125D0065B32B /* TransactionRecord.swift */; };
 		D36AAAAC23A212E30065B32B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D36AAAAB23A212E30065B32B /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
@@ -56,7 +55,6 @@
 		D36AAA8F23A2125D0065B32B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D36AAA9023A2125D0065B32B /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		D36AAA9223A2125D0065B32B /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
-		D36AAA9323A2125D0065B32B /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
 		D36AAA9423A2125D0065B32B /* TransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecord.swift; sourceTree = "<group>"; };
 		D36AAAAB23A212E30065B32B /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				D36AAA9223A2125D0065B32B /* Manager.swift */,
-				D36AAA9323A2125D0065B32B /* Signal.swift */,
 				D36AAA9423A2125D0065B32B /* TransactionRecord.swift */,
 				2FA5DACF4DE83AC5FE512D28 /* Extensions.swift */,
 			);
@@ -241,7 +238,6 @@
 				D36AAAA723A2125E0065B32B /* Configuration.swift in Sources */,
 				D36AAAA023A2125E0065B32B /* WordsController.swift in Sources */,
 				D36AAAA823A2125E0065B32B /* Manager.swift in Sources */,
-				D36AAAA923A2125E0065B32B /* Signal.swift in Sources */,
 				D36AAA9C23A2125E0065B32B /* TransactionCell.swift in Sources */,
 				6BC11A5828EEB0DD0001FDF1 /* BitcoinAdapter.swift in Sources */,
 				D36AAAA423A2125E0065B32B /* SendController.swift in Sources */,

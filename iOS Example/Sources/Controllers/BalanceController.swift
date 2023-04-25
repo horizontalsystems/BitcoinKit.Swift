@@ -1,9 +1,9 @@
+import Combine
 import UIKit
-import RxSwift
 
 class BalanceController: UITableViewController {
-    private let disposeBag = DisposeBag()
-    private var adapterDisposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
+    private var adapterCancellables = Set<AnyCancellable>()
 
     private var adapter: BaseAdapter?
 
@@ -19,13 +19,12 @@ class BalanceController: UITableViewController {
 
         tableView.estimatedRowHeight = 0
 
-        Manager.shared.adapterSignal
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
+        Manager.shared.adapterSubject
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
                     self?.updateAdapters()
-                })
-                .disposed(by: disposeBag)
+                }
+                .store(in: &cancellables)
 
         updateAdapters()
     }
@@ -34,16 +33,15 @@ class BalanceController: UITableViewController {
         adapter = Manager.shared.adapter
         tableView.reloadData()
 
-        adapterDisposeBag = DisposeBag()
+        adapterCancellables = Set()
 
         if let adapter = Manager.shared.adapter {
-            Observable.merge([adapter.lastBlockObservable, adapter.syncStateObservable, adapter.balanceObservable])
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                    .observeOn(MainScheduler.instance)
-                    .subscribe(onNext: { [weak self] in
+            Publishers.MergeMany(adapter.lastBlockPublisher, adapter.syncStatePublisher, adapter.balancePublisher)
+                    .receive(on: DispatchQueue.main)
+                    .sink { [weak self] in
                         self?.update()
-                    })
-                    .disposed(by: adapterDisposeBag)
+                    }
+                    .store(in: &adapterCancellables)
         }
     }
 

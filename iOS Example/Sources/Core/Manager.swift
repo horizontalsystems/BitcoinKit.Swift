@@ -1,5 +1,5 @@
 import Foundation
-import RxSwift
+import Combine
 import BitcoinCore
 import HsToolKit
 import HdWalletKit
@@ -11,7 +11,7 @@ class Manager {
     private let restoreDataKey = "restore_data"
     private let syncModeKey = "syncMode"
 
-    let adapterSignal = Signal()
+    let adapterSubject = PassthroughSubject<Void, Never>()
     var adapter: BitcoinAdapter?
 
     init() {
@@ -53,7 +53,7 @@ class Manager {
             }
         }
 
-        adapterSignal.notify()
+        adapterSubject.send()
     }
 
     var savedRestoreData: String? {
