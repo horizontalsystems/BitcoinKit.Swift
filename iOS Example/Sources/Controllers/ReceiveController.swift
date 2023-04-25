@@ -1,9 +1,9 @@
+import Combine
 import UIKit
-import RxSwift
 import BitcoinCore
 
 class ReceiveController: UIViewController {
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     @IBOutlet weak var addressLabel: UILabel?
 
@@ -18,13 +18,12 @@ class ReceiveController: UIViewController {
         addressLabel?.layer.cornerRadius = 8
         addressLabel?.clipsToBounds = true
 
-        Manager.shared.adapterSignal
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
+        Manager.shared.adapterSubject
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
                     self?.updateAdapters()
-                })
-                .disposed(by: disposeBag)
+                }
+                .store(in: &cancellables)
 
         updateAdapters()
         segmentedControl.addTarget(self, action: #selector(onSegmentChanged), for: .valueChanged)
