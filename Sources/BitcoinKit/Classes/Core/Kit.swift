@@ -66,7 +66,7 @@ public class Kit: AbstractKit {
                     let blockHashFetcher = BlockHashFetcher(hsFetcher: hsBlockHashFetcher, blockchairFetcher: blockchairBlockHashFetcher, checkpointHeight: checkpoint.block.height)
 
                     let blockchairProvider = BlockchairTransactionProvider(blockchairApi: blockchairApi, blockHashFetcher: blockHashFetcher)
-                    let blockchainComProvider = BlockchainComApi(url: "https://blockchain.info", blockHashFetcher: hsBlockHashFetcher, logger: logger)
+                    let blockchainComProvider = BlockchainComApi(url: "https://blockchain.info", blockHashFetcher: blockHashFetcher, logger: logger)
 
                     apiTransactionProvider = BiApiBlockProvider(restoreProvider: blockchainComProvider, syncProvider: blockchairProvider, apiSyncStateManager: apiSyncStateManager)
                 } else {
