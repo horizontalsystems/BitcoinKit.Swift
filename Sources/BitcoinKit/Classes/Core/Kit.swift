@@ -104,7 +104,13 @@ public class Kit: AbstractKit {
 
         blockValidatorSet.add(blockValidator: blockValidatorChain)
 
-        let hodler = HodlerPlugin(addressConverter: bitcoinCoreBuilder.addressConverter, blockMedianTimeHelper: BlockMedianTimeHelper(storage: storage), publicKeyStorage: storage)
+        let blockMedianTimeHelper: BlockMedianTimeHelper
+        if case .blockchair = syncMode {
+            blockMedianTimeHelper = BlockMedianTimeHelper(storage: storage, approximate: true)
+        } else {
+            blockMedianTimeHelper = BlockMedianTimeHelper(storage: storage, approximate: false)
+        }
+        let hodler = HodlerPlugin(addressConverter: bitcoinCoreBuilder.addressConverter, blockMedianTimeHelper: blockMedianTimeHelper, publicKeyStorage: storage)
 
         let bitcoinCore = try bitcoinCoreBuilder
                 .set(network: network)
