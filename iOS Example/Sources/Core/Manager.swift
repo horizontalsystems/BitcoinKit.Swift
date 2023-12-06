@@ -1,8 +1,8 @@
-import Foundation
-import Combine
 import BitcoinCore
-import HsToolKit
+import Combine
+import Foundation
 import HdWalletKit
+import HsToolKit
 
 class Manager {
     static let shared = Manager()
@@ -46,7 +46,7 @@ class Manager {
             adapter = BitcoinAdapter(words: words, purpose: configuration.purpose, testMode: configuration.testNet, syncMode: syncMode, logger: logger)
         } else {
             do {
-                let _ = try HDExtendedKey(extendedKey: restoreData)
+                _ = try HDExtendedKey(extendedKey: restoreData)
                 adapter = BitcoinAdapter(extendedKey: restoreData, purpose: configuration.purpose, testMode: configuration.testNet, syncMode: syncMode, logger: logger)
             } catch {
                 adapter = nil
@@ -86,5 +86,4 @@ class Manager {
     private func clearKits() {
         BitcoinAdapter.clear()
     }
-
 }

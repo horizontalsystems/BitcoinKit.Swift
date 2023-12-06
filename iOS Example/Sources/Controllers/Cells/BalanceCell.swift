@@ -1,5 +1,5 @@
-import UIKit
 import BitcoinCore
+import UIKit
 
 class BalanceCell: UITableViewCell {
     static let dateFormatter: DateFormatter = {
@@ -9,10 +9,10 @@ class BalanceCell: UITableViewCell {
         return formatter
     }()
 
-    @IBOutlet weak var nameLabel: UILabel?
-    @IBOutlet weak var titleLabel: UILabel?
-    @IBOutlet weak var valueLabel: UILabel?
-    @IBOutlet weak var errorLabel: UILabel?
+    @IBOutlet var nameLabel: UILabel?
+    @IBOutlet var titleLabel: UILabel?
+    @IBOutlet var valueLabel: UILabel?
+    @IBOutlet var errorLabel: UILabel?
 
     func bind(adapter: BaseAdapter) {
         let syncStateString: String
@@ -20,9 +20,9 @@ class BalanceCell: UITableViewCell {
 
         switch adapter.syncState {
         case .synced: syncStateString = "Synced!"
-        case .apiSyncing(let transactionsFound): syncStateString = "API Syncing \(transactionsFound) txs"
-        case .syncing(let progress): syncStateString = "Syncing \(Int(progress * 100))%"
-        case .notSynced(let error):
+        case let .apiSyncing(transactionsFound): syncStateString = "API Syncing \(transactionsFound) txs"
+        case let .syncing(progress): syncStateString = "Syncing \(Int(progress * 100))%"
+        case let .notSynced(error):
             syncStateString = "Not Synced"
             errorString = "\(error)"
         }
@@ -43,20 +43,20 @@ class BalanceCell: UITableViewCell {
         }
 
         set(string: """
-                    Sync state:
-                    Last block:
+        Sync state:
+        Last block:
 
-                    Spendable balance:
-                    Unspendable balance:
-                    """, alignment: .left, label: titleLabel)
+        Spendable balance:
+        Unspendable balance:
+        """, alignment: .left, label: titleLabel)
 
         set(string: """
-                    \(syncStateString)
-                    \(lastBlockHeightString)
-                    \(lastBlockDateString)
-                    \(adapter.spendableBalance.formattedAmount) \(adapter.coinCode)
-                    \(adapter.unspendableBalance.formattedAmount) \(adapter.coinCode)
-                    """, alignment: .right, label: valueLabel)
+        \(syncStateString)
+        \(lastBlockHeightString)
+        \(lastBlockDateString)
+        \(adapter.spendableBalance.formattedAmount) \(adapter.coinCode)
+        \(adapter.unspendableBalance.formattedAmount) \(adapter.coinCode)
+        """, alignment: .right, label: valueLabel)
     }
 
     private func set(string: String, alignment: NSTextAlignment, label: UILabel?) {
@@ -65,9 +65,8 @@ class BalanceCell: UITableViewCell {
         paragraphStyle.alignment = alignment
 
         let attributedString = NSMutableAttributedString(string: string)
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
 
         label?.attributedText = attributedString
     }
-
 }

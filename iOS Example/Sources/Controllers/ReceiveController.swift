@@ -1,11 +1,11 @@
+import BitcoinCore
 import Combine
 import UIKit
-import BitcoinCore
 
 class ReceiveController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
 
-    @IBOutlet weak var addressLabel: UILabel?
+    @IBOutlet var addressLabel: UILabel?
 
     private var adapter: BaseAdapter?
     private let segmentedControl = UISegmentedControl()
@@ -19,11 +19,11 @@ class ReceiveController: UIViewController {
         addressLabel?.clipsToBounds = true
 
         Manager.shared.adapterSubject
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.updateAdapters()
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.updateAdapters()
+            }
+            .store(in: &cancellables)
 
         updateAdapters()
         segmentedControl.addTarget(self, action: #selector(onSegmentChanged), for: .valueChanged)
@@ -34,7 +34,7 @@ class ReceiveController: UIViewController {
 
         adapter = Manager.shared.adapter
 
-        if let adapter = adapter {
+        if let adapter {
             segmentedControl.insertSegment(withTitle: adapter.coinCode, at: 0, animated: false)
         }
 
@@ -55,14 +55,15 @@ class ReceiveController: UIViewController {
 
         currentAdapter?.printDebugs()
     }
+
     func updateAddress() {
         addressLabel?.text = "  \(currentAdapter?.receiveAddress() ?? "")  "
     }
 
-    @IBAction func onAddressTypeChanged(_ sender: Any) {
+    @IBAction func onAddressTypeChanged(_: Any) {
         updateAddress()
     }
-    
+
     @IBAction func copyToClipboard() {
         if let address = addressLabel?.text?.trimmingCharacters(in: .whitespaces) {
             UIPasteboard.general.setValue(address, forPasteboardType: "public.plain-text")
@@ -74,11 +75,10 @@ class ReceiveController: UIViewController {
     }
 
     private var currentAdapter: BaseAdapter? {
-        guard segmentedControl.selectedSegmentIndex != -1, 1 > segmentedControl.selectedSegmentIndex else {
+        guard segmentedControl.selectedSegmentIndex != -1, segmentedControl.selectedSegmentIndex < 1 else {
             return nil
         }
 
         return adapter
     }
-
 }

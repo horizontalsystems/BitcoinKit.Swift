@@ -1,11 +1,10 @@
-import UIKit
 import HdWalletKit
+import UIKit
 
 class WordsController: UIViewController {
-
-    @IBOutlet weak var textView: UITextView?
-    @IBOutlet weak var wordListControl: UISegmentedControl!
-    @IBOutlet weak var syncModeListControl: UISegmentedControl!
+    @IBOutlet var textView: UITextView?
+    @IBOutlet var wordListControl: UISegmentedControl!
+    @IBOutlet var syncModeListControl: UISegmentedControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +25,7 @@ class WordsController: UIViewController {
             return
         }
         wordListControl.removeAllSegments()
-        for index in 0..<accountCount {
+        for index in 0 ..< accountCount {
             wordListControl.insertSegment(withTitle: "\(accountCount - index)", at: 0, animated: false)
         }
         wordListControl.selectedSegmentIndex = 0
@@ -37,7 +36,8 @@ class WordsController: UIViewController {
 
         view.endEditing(true)
     }
-    @IBAction func changeWordList(_ sender: Any) {
+
+    @IBAction func changeWordList(_: Any) {
         textView?.text = Configuration.shared.defaultWords[wordListControl.selectedSegmentIndex]
     }
 
@@ -55,7 +55,7 @@ class WordsController: UIViewController {
         let successBlock = { [weak self] in
             Manager.shared.login(restoreData: text, syncModeIndex: self?.syncModeListControl.selectedSegmentIndex ?? 0)
 
-            if let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first {
+            if let window = UIApplication.shared.windows.filter(\.isKeyWindow).first {
                 let mainController = MainController()
                 UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
                     window.rootViewController = mainController
@@ -86,5 +86,4 @@ class WordsController: UIViewController {
             }
         }
     }
-
 }

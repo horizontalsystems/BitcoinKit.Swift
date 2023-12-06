@@ -1,6 +1,6 @@
-import Foundation
-import Combine
 import BitcoinCore
+import Combine
+import Foundation
 
 class BaseAdapter {
     var feeRate: Int { 3 }
@@ -28,8 +28,8 @@ class BaseAdapter {
 
         for input in transaction.inputs {
             from.append(TransactionInputOutput(
-                    mine: input.mine, address: input.address, value: input.value,
-                    changeOutput: false, pluginId: nil, pluginData: nil
+                mine: input.mine, address: input.address, value: input.value,
+                changeOutput: false, pluginId: nil, pluginData: nil
             ))
         }
 
@@ -39,25 +39,25 @@ class BaseAdapter {
             }
 
             to.append(TransactionInputOutput(
-                    mine: output.mine, address: output.address, value: output.value,
-                    changeOutput: output.changeOutput, pluginId: output.pluginId, pluginData: output.pluginData
+                mine: output.mine, address: output.address, value: output.value,
+                changeOutput: output.changeOutput, pluginId: output.pluginId, pluginData: output.pluginData
             ))
         }
 
         return TransactionRecord(
-                uid: transaction.uid,
-                transactionHash: transaction.transactionHash,
-                transactionIndex: transaction.transactionIndex,
-                interTransactionIndex: 0,
-                status: TransactionStatus(rawValue: transaction.status.rawValue) ?? TransactionStatus.new,
-                type: transaction.type,
-                blockHeight: transaction.blockHeight,
-                amount: Decimal(transaction.amount) / coinRate,
-                fee: transaction.fee.map { Decimal($0) / coinRate },
-                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                from: from,
-                to: to,
-                conflictingHash: transaction.conflictingHash
+            uid: transaction.uid,
+            transactionHash: transaction.transactionHash,
+            transactionIndex: transaction.transactionIndex,
+            interTransactionIndex: 0,
+            status: TransactionStatus(rawValue: transaction.status.rawValue) ?? TransactionStatus.new,
+            type: transaction.type,
+            blockHeight: transaction.blockHeight,
+            amount: Decimal(transaction.amount) / coinRate,
+            fee: transaction.fee.map { Decimal($0) / coinRate },
+            date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+            from: from,
+            to: to,
+            conflictingHash: transaction.conflictingHash
         )
     }
 
@@ -70,25 +70,23 @@ class BaseAdapter {
 
     func transactions(fromUid: String?, type: TransactionFilterType? = nil, limit: Int) -> [TransactionRecord] {
         abstractKit.transactions(fromUid: fromUid, type: type, limit: limit)
-                .compactMap {
-                    transactionRecord(fromTransaction: $0)
-                }
+            .compactMap {
+                transactionRecord(fromTransaction: $0)
+            }
     }
-
 }
 
 extension BaseAdapter {
-
     var lastBlockPublisher: AnyPublisher<Void, Never> {
         lastBlockSubject
-                .throttle(for: .milliseconds(200), scheduler: RunLoop.current, latest: true)
-                .eraseToAnyPublisher()
+            .throttle(for: .milliseconds(200), scheduler: RunLoop.current, latest: true)
+            .eraseToAnyPublisher()
     }
 
     var syncStatePublisher: AnyPublisher<Void, Never> {
         syncStateSubject
-                .throttle(for: .milliseconds(200), scheduler: RunLoop.current, latest: true)
-                .eraseToAnyPublisher()
+            .throttle(for: .milliseconds(200), scheduler: RunLoop.current, latest: true)
+            .eraseToAnyPublisher()
     }
 
     var balancePublisher: AnyPublisher<Void, Never> {
@@ -156,7 +154,7 @@ extension BaseAdapter {
     }
 
     func minSpendableAmount(for address: String?) throws -> Decimal {
-        Decimal(try abstractKit.minSpendableValue(toAddress: address)) / coinRate
+        try Decimal(abstractKit.minSpendableValue(toAddress: address)) / coinRate
     }
 
     func fee(for value: Decimal, address: String?, pluginData: [UInt8: IPluginData] = [:]) -> Decimal {
@@ -178,7 +176,6 @@ extension BaseAdapter {
     func rawTransaction(transactionHash: String) -> String? {
         abstractKit.rawTransaction(transactionHash: transactionHash)
     }
-
 }
 
 enum SendError: Error {

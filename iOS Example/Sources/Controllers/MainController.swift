@@ -1,7 +1,6 @@
 import UIKit
 
 class MainController: UITabBarController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,5 +22,4 @@ class MainController: UITabBarController {
 
         viewControllers = [balanceNavigation, transactionsNavigation, sendNavigation, receiveNavigation]
     }
-
 }
