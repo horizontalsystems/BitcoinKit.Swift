@@ -1,5 +1,5 @@
-import Foundation
 import BitcoinCore
+import Foundation
 
 struct TransactionRecord {
     let uid: String

@@ -1,13 +1,12 @@
 import UIKit
 
-@UIApplicationMain
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
 
-    private var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
+    private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let controller = Manager.shared.savedRestoreData == nil ? UINavigationController(rootViewController: WordsController()) : MainController()
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -18,27 +17,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
-    }
+    func applicationWillResignActive(_: UIApplication) {}
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    func applicationDidEnterBackground(_: UIApplication) {
         backgroundTask = UIApplication.shared.beginBackgroundTask {
             UIApplication.shared.endBackgroundTask(self.backgroundTask)
             self.backgroundTask = UIBackgroundTaskIdentifier.invalid
         }
     }
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
+    func applicationWillEnterForeground(_: UIApplication) {
         if backgroundTask != UIBackgroundTaskIdentifier.invalid {
             UIApplication.shared.endBackgroundTask(backgroundTask)
             backgroundTask = UIBackgroundTaskIdentifier.invalid
         }
     }
 
-    func applicationDidBecomeActive(_ application: UIApplication) {
-    }
+    func applicationDidBecomeActive(_: UIApplication) {}
 
-    func applicationWillTerminate(_ application: UIApplication) {
-    }
-
+    func applicationWillTerminate(_: UIApplication) {}
 }

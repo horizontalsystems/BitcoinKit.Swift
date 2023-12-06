@@ -1,6 +1,6 @@
 import Foundation
-import UIKit
 import Hodler
+import UIKit
 
 class TransactionCell: UITableViewCell {
     static let dateFormatter: DateFormatter = {
@@ -10,15 +10,15 @@ class TransactionCell: UITableViewCell {
         return formatter
     }()
 
-    @IBOutlet weak var titleLabel: UILabel?
-    @IBOutlet weak var valueLabel: UILabel?
-    @IBOutlet weak var transactionTypeLabel: UILabel?
+    @IBOutlet var titleLabel: UILabel?
+    @IBOutlet var valueLabel: UILabel?
+    @IBOutlet var transactionTypeLabel: UILabel?
     private let coinRate: Decimal = pow(10, 8)
 
     func bind(index: Int, transaction: TransactionRecord, coinCode: String, lastBlockHeight: Int?) {
         var confirmations = "n/a"
 
-        if let lastBlockHeight = lastBlockHeight, let blockHeight = transaction.blockHeight {
+        if let lastBlockHeight, let blockHeight = transaction.blockHeight {
             confirmations = "\(lastBlockHeight - blockHeight + 1)"
         }
 
@@ -52,35 +52,35 @@ class TransactionCell: UITableViewCell {
         }
 
         set(string: """
-                    Tx Hash: \(index)
-                    Tx Status:
-                    Tx Index:
-                    Date:
-                    Type:
-                    Amount:
-                    Fee:
-                    Block:
-                    ConflictingHash:
-                    Confirmations:
-                    \(from.map { _ in "From:" }.joined(separator: "\n"))
-                    \(transaction.to.map { "To:\(String(repeating: "\n", count: TransactionCell.rowsCount(address: $0)))" }.joined(separator: ""))
-                    """, alignment: .left, label: titleLabel)
+        Tx Hash: \(index)
+        Tx Status:
+        Tx Index:
+        Date:
+        Type:
+        Amount:
+        Fee:
+        Block:
+        ConflictingHash:
+        Confirmations:
+        \(from.map { _ in "From:" }.joined(separator: "\n"))
+        \(transaction.to.map { "To:\(String(repeating: "\n", count: TransactionCell.rowsCount(address: $0)))" }.joined(separator: ""))
+        """, alignment: .left, label: titleLabel)
 
         set(string: """
-                    \(format(hash: transaction.transactionHash))
-                    \(transaction.status)
-                    \(transaction.transactionIndex)
-                    \(TransactionCell.dateFormatter.string(from: transaction.date))
-                    \(transaction.type.rawValue)
-                    \(transaction.amount.formattedAmount) \(coinCode)
-                    \(transaction.fee?.formattedAmount ?? "") \(coinCode)
-                    \(transaction.blockHeight.map { "# \($0)" } ?? "n/a")
-                    \(format(hash: transaction.conflictingHash ?? "n/a"))
-                    \(confirmations)
-                    \(from.joined(separator: "\n"))
-                    \(to.joined(separator: "\n"))
-                    """, alignment: .right, label: valueLabel)
-        
+        \(format(hash: transaction.transactionHash))
+        \(transaction.status)
+        \(transaction.transactionIndex)
+        \(TransactionCell.dateFormatter.string(from: transaction.date))
+        \(transaction.type.rawValue)
+        \(transaction.amount.formattedAmount) \(coinCode)
+        \(transaction.fee?.formattedAmount ?? "") \(coinCode)
+        \(transaction.blockHeight.map { "# \($0)" } ?? "n/a")
+        \(format(hash: transaction.conflictingHash ?? "n/a"))
+        \(confirmations)
+        \(from.joined(separator: "\n"))
+        \(to.joined(separator: "\n"))
+        """, alignment: .right, label: valueLabel)
+
         transactionTypeLabel?.isHidden = transaction.transactionExtraType == nil
         transactionTypeLabel?.text = transaction.transactionExtraType
     }
@@ -91,7 +91,7 @@ class TransactionCell: UITableViewCell {
         paragraphStyle.alignment = alignment
 
         let attributedString = NSMutableAttributedString(string: string)
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
 
         label?.attributedText = attributedString
     }
@@ -103,18 +103,16 @@ class TransactionCell: UITableViewCell {
 
         return "\(hash[..<hash.index(hash.startIndex, offsetBy: 8)])...\(hash[hash.index(hash.endIndex, offsetBy: -2)...])"
     }
-
 }
 
 extension TransactionCell {
-    
     static func rowsCount(address: TransactionInputOutput) -> Int {
         var rowsCount = 1
 
         if let pluginId = address.pluginId, pluginId == HodlerPlugin.id {
             rowsCount += 2
         }
-        
+
         return rowsCount
     }
 
@@ -128,5 +126,4 @@ extension TransactionCell {
 
         return height
     }
-
 }

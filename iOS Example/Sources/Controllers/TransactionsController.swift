@@ -25,11 +25,11 @@ class TransactionsController: UITableViewController {
         segmentedControl.addTarget(self, action: #selector(onSegmentChanged), for: .valueChanged)
 
         Manager.shared.adapterSubject
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.updateAdapters()
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.updateAdapters()
+            }
+            .store(in: &cancellables)
 
         updateAdapters()
     }
@@ -41,22 +41,22 @@ class TransactionsController: UITableViewController {
 
         adapterCancellables = Set()
 
-        if let adapter = adapter {
+        if let adapter {
             segmentedControl.insertSegment(withTitle: adapter.coinCode, at: 0, animated: false)
 
             adapter.lastBlockPublisher
-                    .receive(on: DispatchQueue.main)
-                    .sink { [weak self] in
-                        self?.onLastBlockHeightUpdated()
-                    }
-                    .store(in: &adapterCancellables)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.onLastBlockHeightUpdated()
+                }
+                .store(in: &adapterCancellables)
 
             adapter.transactionsPublisher
-                    .receive(on: DispatchQueue.main)
-                    .sink { [weak self] in
-                        self?.onTransactionsUpdated()
-                    }
-                    .store(in: &adapterCancellables)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.onTransactionsUpdated()
+                }
+                .store(in: &adapterCancellables)
         }
 
         navigationItem.titleView = segmentedControl
@@ -72,12 +72,12 @@ class TransactionsController: UITableViewController {
         loadNext()
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
 //        print(transactions.count)
-        return transactions.count
+        transactions.count
     }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         CGFloat(TransactionCell.rowHeight(for: transactions[indexPath.row]))
     }
 
@@ -85,8 +85,8 @@ class TransactionsController: UITableViewController {
         tableView.dequeueReusableCell(withIdentifier: String(describing: TransactionCell.self), for: indexPath)
     }
 
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let currentAdapter = currentAdapter, indexPath.row < transactions.count else {
+    override func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let currentAdapter, indexPath.row < transactions.count else {
             return
         }
 
@@ -115,7 +115,7 @@ class TransactionsController: UITableViewController {
     }
 
     private var currentAdapter: BaseAdapter? {
-        guard segmentedControl.selectedSegmentIndex != -1, 1 > segmentedControl.selectedSegmentIndex else {
+        guard segmentedControl.selectedSegmentIndex != -1, segmentedControl.selectedSegmentIndex < 1 else {
             return nil
         }
 
@@ -153,5 +153,4 @@ class TransactionsController: UITableViewController {
     private func onTransactionsUpdated() {
         onSegmentChanged()
     }
-
 }

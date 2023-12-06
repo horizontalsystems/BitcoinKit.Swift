@@ -1,18 +1,18 @@
-import Combine
-import UIKit
-import Hodler
 import BitcoinCore
+import Combine
+import Hodler
+import UIKit
 
 class SendController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
 
-    @IBOutlet weak var addressTextField: UITextField?
-    @IBOutlet weak var amountTextField: UITextField?
-    @IBOutlet weak var coinLabel: UILabel?
-    @IBOutlet weak var feeLabel: UILabel?
-    @IBOutlet weak var timeLockSwitch: UISwitch?
-    @IBOutlet weak var sendButton: UIButton!
-    @IBOutlet weak var picker: UIPickerView?
+    @IBOutlet var addressTextField: UITextField?
+    @IBOutlet var amountTextField: UITextField?
+    @IBOutlet var coinLabel: UILabel?
+    @IBOutlet var feeLabel: UILabel?
+    @IBOutlet var timeLockSwitch: UISwitch?
+    @IBOutlet var sendButton: UIButton!
+    @IBOutlet var picker: UIPickerView?
 
     private var timeIntervalStrings = ["Hour", "Month", "Half Year", "Year"]
     private var timeIntervals: [HodlerPlugin.LockTimeInterval] = [.hour, .month, .halfYear, .year]
@@ -30,11 +30,11 @@ class SendController: UIViewController {
         picker?.delegate = self
 
         Manager.shared.adapterSubject
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.updateAdapters()
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.updateAdapters()
+            }
+            .store(in: &cancellables)
 
         updateAdapters()
     }
@@ -44,7 +44,7 @@ class SendController: UIViewController {
 
         adapter = Manager.shared.adapter
 
-        if let adapter = adapter {
+        if let adapter {
             segmentedControl.insertSegment(withTitle: adapter.coinCode, at: 0, animated: false)
         }
 
@@ -66,28 +66,27 @@ class SendController: UIViewController {
         picker?.isHidden = watchAccount
         sendButton.isEnabled = !watchAccount
     }
-    
+
     private func updateFee() {
         var address: String? = nil
-        
+
         if let addressStr = addressTextField?.text {
             do {
                 try currentAdapter?.validate(address: addressStr)
                 address = addressStr
-            } catch {
-            }
+            } catch {}
         }
 
         guard let amountString = amountTextField?.text, let amount = Decimal(string: amountString) else {
             feeLabel?.text = "Fee: "
             return
         }
-        
+
         var pluginData = [UInt8: IPluginData]()
         if timeLockEnabled {
-            pluginData[HodlerPlugin.id] = HodlerData(lockTimeInterval: self.selectedTimeInterval)
+            pluginData[HodlerPlugin.id] = HodlerData(lockTimeInterval: selectedTimeInterval)
         }
-        
+
         if let fee = currentAdapter?.fee(for: amount, address: address, pluginData: pluginData) {
             feeLabel?.text = "Fee: \(fee.formattedAmount)"
         }
@@ -98,56 +97,54 @@ class SendController: UIViewController {
 
         view.endEditing(true)
     }
-    
+
     @objc func onSegmentChanged() {
         coinLabel?.text = currentAdapter?.coinCode
         updateFee()
     }
-    
-    @IBAction func onAddressEditEnded(_ sender: Any) {
+
+    @IBAction func onAddressEditEnded(_: Any) {
         updateFee()
     }
-    
-    @IBAction func onAmountEditEnded(_ sender: Any) {
+
+    @IBAction func onAmountEditEnded(_: Any) {
         updateFee()
     }
-    
-    @IBAction func onTimeLockSwitchToggle(_ sender: Any) {
+
+    @IBAction func onTimeLockSwitchToggle(_: Any) {
         timeLockEnabled = !timeLockEnabled
         updateFee()
     }
-    
+
     @IBAction func setMaxAmount() {
         var address: String? = nil
-        
+
         if let addressStr = addressTextField?.text {
             do {
                 try currentAdapter?.validate(address: addressStr)
                 address = addressStr
-            } catch {
-            }
+            } catch {}
         }
 
         var pluginData = [UInt8: IPluginData]()
         if timeLockEnabled {
-            pluginData[HodlerPlugin.id] = HodlerData(lockTimeInterval: self.selectedTimeInterval)
+            pluginData[HodlerPlugin.id] = HodlerData(lockTimeInterval: selectedTimeInterval)
         }
-        
+
         if let maxAmount = currentAdapter?.availableBalance(for: address, pluginData: pluginData) {
             amountTextField?.text = "\(maxAmount)"
             onAmountEditEnded(0)
         }
     }
-    
+
     @IBAction func setMinAmount() {
         var address: String? = nil
-        
+
         if let addressStr = addressTextField?.text {
             do {
                 try currentAdapter?.validate(address: addressStr)
                 address = addressStr
-            } catch {
-            }
+            } catch {}
         }
 
         if let minAmount = try? currentAdapter?.minSpendableAmount(for: address) {
@@ -172,10 +169,10 @@ class SendController: UIViewController {
             show(error: "Invalid amount")
             return
         }
-        
+
         var pluginData = [UInt8: IPluginData]()
         if timeLockEnabled {
-            pluginData[HodlerPlugin.id] = HodlerData(lockTimeInterval: self.selectedTimeInterval)
+            pluginData[HodlerPlugin.id] = HodlerData(lockTimeInterval: selectedTimeInterval)
         }
 
         do {
@@ -203,39 +200,38 @@ class SendController: UIViewController {
     }
 
     private var currentAdapter: BaseAdapter? {
-        guard segmentedControl.selectedSegmentIndex != -1, 1 > segmentedControl.selectedSegmentIndex else {
+        guard segmentedControl.selectedSegmentIndex != -1, segmentedControl.selectedSegmentIndex < 1 else {
             return nil
         }
 
         return adapter
     }
-
 }
 
 extension SendController: UIPickerViewDataSource {
-    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    public func numberOfComponents(in _: UIPickerView) -> Int {
         1
     }
 
-    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    public func pickerView(_: UIPickerView, numberOfRowsInComponent _: Int) -> Int {
         timeIntervals.count
     }
 }
 
 extension SendController: UIPickerViewDelegate {
-    public func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+    public func pickerView(_: UIPickerView, widthForComponent _: Int) -> CGFloat {
         130
     }
 
-    public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+    public func pickerView(_: UIPickerView, rowHeightForComponent _: Int) -> CGFloat {
         30
     }
 
-    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    public func pickerView(_: UIPickerView, titleForRow row: Int, forComponent _: Int) -> String? {
         timeIntervalStrings[row]
     }
 
-    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    public func pickerView(_: UIPickerView, didSelectRow row: Int, inComponent _: Int) {
         selectedTimeInterval = timeIntervals[row]
     }
 }
