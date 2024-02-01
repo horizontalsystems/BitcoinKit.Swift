@@ -32,7 +32,7 @@ public class Kit: AbstractKit {
         }
     }
 
-    private init(extendedKey: HDExtendedKey?, watchAddressPublicKey: WatchAddressPublicKey?, purpose: Purpose, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?) throws {
+    private init(extendedKey: HDExtendedKey?, watchAddressPublicKey: WatchAddressPublicKey?, purpose: Purpose, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?, signer: ITransactionSigner?) throws {
         let network = networkType.network
         let logger = logger ?? Logger(minLogLevel: .verbose)
         let databaseFilePath = try DirectoryHelper.directoryURL(for: Kit.name).appendingPathComponent(Kit.databaseFileName(walletId: walletId, networkType: networkType, purpose: purpose, syncMode: syncMode)).path
@@ -108,6 +108,7 @@ public class Kit: AbstractKit {
             .set(purpose: purpose)
             .set(extendedKey: extendedKey)
             .set(watchAddressPublicKey: watchAddressPublicKey)
+            .set(signer: signer)
             .build()
 
         super.init(bitcoinCore: bitcoinCore, network: network)
@@ -117,7 +118,7 @@ public class Kit: AbstractKit {
         }
     }
 
-    public convenience init(seed: Data, purpose: Purpose, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?) throws {
+    public convenience init(seed: Data, purpose: Purpose, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?, signer: ITransactionSigner?) throws {
         let version: HDExtendedKeyVersion
         switch purpose {
         case .bip44: version = .xprv
@@ -133,17 +134,17 @@ public class Kit: AbstractKit {
                       syncMode: syncMode,
                       networkType: networkType,
                       confirmationsThreshold: confirmationsThreshold,
-                      logger: logger)
+                      logger: logger, signer: signer)
     }
 
-    public convenience init(extendedKey: HDExtendedKey, purpose: Purpose, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?) throws {
+    public convenience init(extendedKey: HDExtendedKey, purpose: Purpose, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?, signer: ITransactionSigner?) throws {
         try self.init(extendedKey: extendedKey, watchAddressPublicKey: nil,
                       purpose: purpose,
                       walletId: walletId,
                       syncMode: syncMode,
                       networkType: networkType,
                       confirmationsThreshold: confirmationsThreshold,
-                      logger: logger)
+                      logger: logger, signer: signer)
 
         let scriptConverter = ScriptConverter()
         let bech32AddressConverter = SegWitBech32AddressConverter(prefix: network.bech32PrefixPattern, scriptConverter: scriptConverter)
@@ -165,7 +166,7 @@ public class Kit: AbstractKit {
         }
     }
 
-    public convenience init(watchAddress: String, purpose: Purpose, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?) throws {
+    public convenience init(watchAddress: String, purpose: Purpose, walletId: String, syncMode: BitcoinCore.SyncMode = .api, networkType: NetworkType = .mainNet, confirmationsThreshold: Int = 6, logger: Logger?, signer: ITransactionSigner?) throws {
         let network = networkType.network
         let scriptConverter = ScriptConverter()
         let bech32AddressConverter = SegWitBech32AddressConverter(prefix: network.bech32PrefixPattern, scriptConverter: scriptConverter)
@@ -183,7 +184,7 @@ public class Kit: AbstractKit {
                       syncMode: syncMode,
                       networkType: networkType,
                       confirmationsThreshold: confirmationsThreshold,
-                      logger: logger)
+                      logger: logger, signer: signer)
 
         bitcoinCore.prepend(addressConverter: bech32AddressConverter)
 
