@@ -45,8 +45,8 @@ public class Kit: AbstractKit {
         case .mainNet:
             let hsBlockHashFetcher = HsBlockHashFetcher(hsUrl: "https://api.blocksdecoded.com/v1/blockchains/bitcoin", logger: logger)
 
-            if case let .blockchair(key) = syncMode {
-                let blockchairApi = BlockchairApi(secretKey: key, chainId: network.blockchairChainId, logger: logger)
+            if case .blockchair = syncMode {
+                let blockchairApi = BlockchairApi(chainId: network.blockchairChainId, logger: logger)
                 let blockchairBlockHashFetcher = BlockchairBlockHashFetcher(blockchairApi: blockchairApi)
                 let blockHashFetcher = BlockHashFetcher(hsFetcher: hsBlockHashFetcher, blockchairFetcher: blockchairBlockHashFetcher, checkpointHeight: checkpoint.block.height)
 
