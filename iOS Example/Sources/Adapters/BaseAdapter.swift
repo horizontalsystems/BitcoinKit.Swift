@@ -135,13 +135,13 @@ extension BaseAdapter {
         }
     }
 
-    func send(to address: String, amount: Decimal, sortType: TransactionDataSortType, pluginData: [UInt8: IPluginData] = [:]) throws {
+    func send(to address: String, memo: String? = nil, amount: Decimal, sortType: TransactionDataSortType, unspentOutputs: [UnspentOutputInfo]? = nil, pluginData: [UInt8: IPluginData] = [:]) throws {
         let satoshiAmount = convertToSatoshi(value: amount)
-        _ = try abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, sortType: sortType, pluginData: pluginData)
+        _ = try abstractKit.send(to: address, memo: memo, value: satoshiAmount, feeRate: feeRate, sortType: sortType, rbfEnabled: false, unspentOutputs: unspentOutputs, pluginData: pluginData)
     }
 
-    func availableBalance(for address: String?, pluginData: [UInt8: IPluginData] = [:]) -> Decimal {
-        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, feeRate: feeRate, pluginData: pluginData)) ?? 0
+    func availableBalance(for address: String?, memo: String? = nil, unspentOutputs: [UnspentOutputInfo]? = nil, pluginData: [UInt8: IPluginData] = [:]) -> Decimal {
+        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, memo: memo, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)) ?? 0
         return Decimal(amount) / coinRate
     }
 
@@ -157,11 +157,11 @@ extension BaseAdapter {
         try Decimal(abstractKit.minSpendableValue(toAddress: address)) / coinRate
     }
 
-    func fee(for value: Decimal, address: String?, pluginData: [UInt8: IPluginData] = [:]) -> Decimal {
+    func fee(for value: Decimal, memo: String?, address: String?, pluginData: [UInt8: IPluginData] = [:]) -> Decimal {
         do {
             let amount = convertToSatoshi(value: value)
-            let fee = try abstractKit.fee(for: amount, toAddress: address, feeRate: feeRate, pluginData: pluginData)
-            return Decimal(fee) / coinRate
+            let sendInfo = try abstractKit.sendInfo(for: amount, memo: memo, feeRate: feeRate, unspentOutputs: nil)
+            return Decimal(sendInfo.fee) / coinRate
         } catch {
             return 0
         }

@@ -87,7 +87,7 @@ class SendController: UIViewController {
             pluginData[HodlerPlugin.id] = HodlerData(lockTimeInterval: selectedTimeInterval)
         }
 
-        if let fee = currentAdapter?.fee(for: amount, address: address, pluginData: pluginData) {
+        if let fee = currentAdapter?.fee(for: amount, memo: nil, address: address, pluginData: pluginData) {
             feeLabel?.text = "Fee: \(fee.formattedAmount)"
         }
     }
