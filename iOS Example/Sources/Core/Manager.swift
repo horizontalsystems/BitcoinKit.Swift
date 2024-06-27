@@ -6,7 +6,7 @@ import HsToolKit
 
 class Manager {
     static let shared = Manager()
-    private static let syncModes: [BitcoinCore.SyncMode] = [.full, .api]
+    private static let syncModes: [BitcoinCore.SyncMode] = [.full, .api, .blockchair]
 
     private let restoreDataKey = "restore_data"
     private let syncModeKey = "syncMode"
@@ -43,11 +43,19 @@ class Manager {
 
         let words = restoreData.components(separatedBy: .whitespacesAndNewlines)
         if words.count > 1 {
-            adapter = BitcoinAdapter(words: words, purpose: configuration.purpose, testMode: configuration.testNet, syncMode: syncMode, logger: logger)
+            adapter = BitcoinAdapter(words: words, 
+                                     purpose: configuration.purpose,
+                                     testMode: configuration.testNet,
+                                     syncMode: syncMode,
+                                     logger: logger)
         } else {
             do {
                 _ = try HDExtendedKey(extendedKey: restoreData)
-                adapter = BitcoinAdapter(extendedKey: restoreData, purpose: configuration.purpose, testMode: configuration.testNet, syncMode: syncMode, logger: logger)
+                adapter = BitcoinAdapter(extendedKey: restoreData, 
+                                         purpose: configuration.purpose,
+                                         testMode: configuration.testNet,
+                                         syncMode: syncMode, 
+                                         logger: logger)
             } catch {
                 adapter = nil
             }
