@@ -154,7 +154,6 @@ extension BaseAdapter {
                                                                        memo: memo,
                                                                        unspentOutputs: unspentOutputs,
                                                                        pluginData: pluginData))) ?? .zero
-//        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, memo: memo, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)) ?? 0
         return Decimal(amount) / coinRate
     }
 
