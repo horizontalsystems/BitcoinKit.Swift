@@ -137,11 +137,23 @@ extension BaseAdapter {
 
     func send(to address: String, memo: String? = nil, amount: Decimal, sortType: TransactionDataSortType, unspentOutputs: [UnspentOutputInfo]? = nil, pluginData: [UInt8: IPluginData] = [:]) throws {
         let satoshiAmount = convertToSatoshi(value: amount)
-        _ = try abstractKit.send(to: address, memo: memo, value: satoshiAmount, feeRate: feeRate, sortType: sortType, rbfEnabled: false, unspentOutputs: unspentOutputs, pluginData: pluginData)
+        let params = SendParameters(address: address,
+                                    value: satoshiAmount,
+                                    feeRate: feeRate,
+                                    sortType: sortType,
+                                    rbfEnabled: false,
+                                    memo: memo,
+                                    unspentOutputs: unspentOutputs,
+                                    pluginData: pluginData)
+        _ = try abstractKit.send(params: params)
     }
 
     func availableBalance(for address: String?, memo: String? = nil, unspentOutputs: [UnspentOutputInfo]? = nil, pluginData: [UInt8: IPluginData] = [:]) -> Decimal {
-        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, memo: memo, feeRate: feeRate, unspentOutputs: unspentOutputs, pluginData: pluginData)) ?? 0
+        let amount = (try? abstractKit.maxSpendableValue(params: .init(address: address,
+                                                                       feeRate: feeRate,
+                                                                       memo: memo,
+                                                                       unspentOutputs: unspentOutputs,
+                                                                       pluginData: pluginData))) ?? .zero
         return Decimal(amount) / coinRate
     }
 
@@ -154,13 +166,14 @@ extension BaseAdapter {
     }
 
     func minSpendableAmount(for address: String?) throws -> Decimal {
-        try Decimal(abstractKit.minSpendableValue(toAddress: address)) / coinRate
+        let amount = Decimal(try abstractKit.minSpendableValue(params: .init(address: address)))
+        return amount / coinRate
     }
 
     func fee(for value: Decimal, memo: String?, address: String?, pluginData: [UInt8: IPluginData] = [:]) -> Decimal {
         do {
             let amount = convertToSatoshi(value: value)
-            let sendInfo = try abstractKit.sendInfo(for: amount, memo: memo, feeRate: feeRate, unspentOutputs: nil)
+            let sendInfo = try abstractKit.sendInfo(params: .init(value: amount, feeRate: feeRate, memo: memo, unspentOutputs: nil))
             return Decimal(sendInfo.fee) / coinRate
         } catch {
             return 0
