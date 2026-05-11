@@ -17,6 +17,7 @@ public class MainNet: INetwork {
     public var blockchairChainId: String = "bitcoin"
 
     public let dnsSeeds = [
+        "btc.unstoppable.money",
         "x5.seed.bitcoin.sipa.be", // Pieter Wuille
         "x5.dnsseed.bluematt.me", // Matt Corallo
         "x5.seed.bitcoinstats.com", // Chris Decker
